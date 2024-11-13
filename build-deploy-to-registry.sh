@@ -61,3 +61,18 @@ echo $GITHUB_PAT | sudo docker login $GITHUB_REGISTRY --username $GITHUB_USERNAM
 
 # Push the image to github registry
 sudo docker push $FULL_NEW_IMAGE_NAME
+
+######################################
+# Deploy Image To Docker Hub
+######################################
+# Define full new image name for Docker Hub
+FULL_NEW_IMAGE_NAME=$DOCKERHUB_USERNAME/$IMAGE_REPO_NAME:$IMAGE_TAG
+
+# Rename previous image repo with new repo and tag
+sudo docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $FULL_NEW_IMAGE_NAME
+
+# Login to Docker Hub
+echo $DOCKERHUB_PASSWORD | sudo docker login --username $DOCKERHUB_USERNAME --password-stdin
+
+# Push the image to Docker Hub
+sudo docker push $FULL_NEW_IMAGE_NAME
